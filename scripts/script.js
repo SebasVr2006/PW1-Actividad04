@@ -1,52 +1,52 @@
-document.querySelector('#form-container').addEventListener('submit', (btn) => {
-    btn.preventDefault();
-    if (validarFormulario()) {
-        window.location.href = './mostrarResultados.html'
-    }
-})
+document.querySelector('#form-container').addEventListener('submit', e => {
+    e.preventDefault()
 
-function validarFormulario() {
-    const nombre = document.querySelector('#nombre').value;
-    const mail = document.querySelector('#mail').value;
-    const edad = document.querySelector('#edad').value;
+    const nombre = document.querySelector('#nombre').value.trim();
+    const email = document.querySelector('#mail').value.trim();
+    const edad = parseInt(document.querySelector('#edad').value);
     const pais = document.querySelector('#select-pais').value;
-    const terminos = document.querySelector('#terminos');
-    let esValido = true;
+    const terminos = document.querySelector('#terminos').checked;
 
-    if (nombre.trim() === '') {
-        alert('Error al validar.')
-        esValido = false;
-    } else {
-        localStorage.setItem('nombre', nombre)
+    const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validación nombre
+    if (nombre.length < 5) {
+        document.querySelector('#error-nombre').textContent = 'Nombre muy corto'
+        return;
     }
 
-    if (mail.trim() === '') {
-        alert('Error al validar.')
-        esValido = false;
-    } else {
-        localStorage.setItem('mail', mail)
+    // Validación email
+    if (!regEx.test(email)) {
+        document.querySelector('#error-mail').textContent = 'Email no válido'
+        return;
     }
 
-    if (edad.trim() === '') {
-        alert('Error al validar.')
-        esValido = false;
-    } else {
-        localStorage.setItem('edad', edad)
+    // Validación edad
+    if (isNaN(edad) || edad < 18) {
+        document.querySelector('#error-edad').textContent = 'Edad no válida'
+        return;
     }
 
-    if (pais.trim() === '') {
-        alert('Error al validar.')
-        esValido = false;
-    } else {
-        localStorage.setItem('pais', pais)
+    // Validación pais
+    if (pais === '') {
+        document.querySelector('#error-pais').textContent = 'Seleccione un país'
+        return;
     }
 
-    if (!terminos.checked) {
-        alert('Error al validar.')
-        esValido = false;
-    } else {
-        localStorage.setItem('terminos', terminos)
+    // Validación terminos
+    if (!terminos) {
+        document.querySelector('#error-terminos').textContent = 'Debe aceptar los términos para continuar'
+        return;
     }
+    console.log({ nombre, email, edad, pais, terminos });
+    
+    const searchParams = new URLSearchParams({
+        nombre: nombre,
+        email: email,
+        edad: edad,
+        pais: pais,
+        terminos: terminos
+    })
 
-    return esValido;
-}
+    window.location.href = `mostrarResultados.html?${searchParams.toString()}`
+})

@@ -12,35 +12,40 @@
     <form id="form-container">
 
         <label for="nombre">Nombre: </label>
-        <input type="text" id="nombre" name="nombre" minlength="5" placeholder="John Doe" required>
+        <input type="text" id="nombre" name="nombre" minlength="5" placeholder="John Doe">
+        <p class="error" id="error-nombre"></p>
 
         <label for="mail">Mail: </label>
-        <input type="email" id="mail" name="mail" placeholder="johndoe@mail.com" required>
+        <input type="email" id="mail" name="mail" placeholder="johndoe@mail.com">
+        <p class="error" id="error-mail"></p>
 
-        <label for="edad">Edad: </label>
-        <input type="number" id="edad" name="edad" required>
+        <label for="edad">Edad (18 o más): </label>
+        <input type="number" id="edad" name="edad">
+        <p class="error" id="error-edad"></p>
 
         <label for="pais">Pais: </label>
-        <select name="pais" id="select-pais" required>
+        <select name="pais" id="select-pais">
             <option value=""> --- Seleccionar ---</option>
             <option value="Argentina">Argentina</option>
             <option value="Brasil">Brasil</option>
             <option value="Chile">Chile</option>
             <option value="Colombia">Colombia</option>
         </select>
+        <p class="error" id="error-pais"></p>
 
         <div class="terminos-container">
             <label for="terminos">Aceptar términos: </label>
-            <input type="checkbox" id="terminos" name="terminos" required>
+            <input type="checkbox" id="terminos" name="terminos">
         </div>
-
+        <p class="error" id="error-terminos"></p>
 
         <div class="buttons">
             <button type="reset">Cancelar</button>
-            <button id="btn-aceptar">Aceptar</button>
+            <button id="btn-aceptar" type="submit">Aceptar</button>
         </div>
-
     </form>
+
+
     <script src="./scripts/script.js"></script>
 </body>
 
